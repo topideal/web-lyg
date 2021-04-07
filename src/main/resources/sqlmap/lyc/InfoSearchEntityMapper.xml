@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.misnz.lyc.dao.InfoSearchEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.misnz.lyc.model.InfoSearchEntity" >
+    <result column="brands_title_en" property="brandsTitleEn" jdbcType="VARCHAR" />
+    <result column="brands_title_cn" property="brandsTitleCn" jdbcType="VARCHAR" />
+    <result column="country_title_cn" property="countryTitleCn" jdbcType="VARCHAR" />
+    <result column="country_title_en" property="countryTitleEn" jdbcType="VARCHAR" />
+    <result column="trades_title_cn" property="tradesTitleCn" jdbcType="VARCHAR" />
+    <result column="trades_title_en" property="tradesTitleEn" jdbcType="VARCHAR" />
+    <result column="info_id" property="infoId" jdbcType="VARCHAR" />
+    <result column="info_type" property="infoType" jdbcType="INTEGER" />
+    <result column="info_title_en" property="infoTitleEn" jdbcType="VARCHAR" />
+    <result column="info_title_cn" property="infoTitleCn" jdbcType="VARCHAR" />
+    <result column="info_res_name" property="infoResName" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="BIGINT" />
+    <result column="opt_date" property="optDate" jdbcType="BIGINT" />
+    <result column="sort_filed" property="sortFiled" jdbcType="INTEGER" />
+    <result column="info_month" property="infoMonth" jdbcType="VARCHAR" />
+    <result column="country_id" property="countryId" jdbcType="VARCHAR" />
+    <result column="brands_id" property="brandsId" jdbcType="VARCHAR" />
+    <result column="years_code" property="yearsCode" jdbcType="VARCHAR" />
+    <result column="trade_id" property="tradeId" jdbcType="VARCHAR" />
+    <result column="browser" property="browser" jdbcType="INTEGER" />
+    <result column="hits" property="hits" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.misnz.lyc.model.InfoSearchEntity" extends="BaseResultMap" >
+    <result column="classified_title_cn" property="classifiedTitleCn" jdbcType="LONGVARCHAR" />
+    <result column="classified_title_en" property="classifiedTitleEn" jdbcType="LONGVARCHAR" />
+    <result column="classified_id" property="classifiedId" jdbcType="LONGVARCHAR" />
+    <result column="tags_title_cn" property="tagsTitleCn" jdbcType="LONGVARCHAR" />
+    <result column="tags_title_en" property="tagsTitleEn" jdbcType="LONGVARCHAR" />
+    <result column="tags_id" property="tagsId" jdbcType="LONGVARCHAR" />
+    <result column="info_remark_en" property="infoRemarkEn" jdbcType="LONGVARCHAR" />
+    <result column="info_remark_cn" property="infoRemarkCn" jdbcType="LONGVARCHAR" />
+    <result column="key_all_en" property="keyAllEn" jdbcType="LONGVARCHAR" />
+    <result column="key_all_cn" property="keyAllCn" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    brands_title_en, brands_title_cn, country_title_cn, country_title_en, trades_title_cn, 
+    trades_title_en, info_id, info_type, info_title_en, info_title_cn, info_res_name, 
+    create_date, opt_date, sort_filed, info_month, country_id, brands_id, years_code, 
+    trade_id, browser, hits
+  </sql>
+  <sql id="Blob_Column_List" >
+    classified_title_cn, classified_title_en, classified_id, tags_title_cn, tags_title_en, 
+    tags_id, info_remark_en, info_remark_cn, key_all_en, key_all_cn
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.misnz.lyc.model.InfoSearchEntityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from v_lyc_info_search
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.misnz.lyc.model.InfoSearchEntityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from v_lyc_info_search
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.misnz.lyc.model.InfoSearchEntityExample" >
+    delete from v_lyc_info_search
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.misnz.lyc.model.InfoSearchEntity" >
+    insert into v_lyc_info_search (brands_title_en, brands_title_cn, country_title_cn, 
+      country_title_en, trades_title_cn, trades_title_en, 
+      info_id, info_type, info_title_en, 
+      info_title_cn, info_res_name, create_date, 
+      opt_date, sort_filed, info_month, 
+      country_id, brands_id, years_code, 
+      trade_id, browser, hits, 
+      classified_title_cn, classified_title_en, 
+      classified_id, tags_title_cn, tags_title_en, 
+      tags_id, info_remark_en, info_remark_cn, 
+      key_all_en, key_all_cn)
+    values (#{brandsTitleEn,jdbcType=VARCHAR}, #{brandsTitleCn,jdbcType=VARCHAR}, #{countryTitleCn,jdbcType=VARCHAR}, 
+      #{countryTitleEn,jdbcType=VARCHAR}, #{tradesTitleCn,jdbcType=VARCHAR}, #{tradesTitleEn,jdbcType=VARCHAR}, 
+      #{infoId,jdbcType=VARCHAR}, #{infoType,jdbcType=INTEGER}, #{infoTitleEn,jdbcType=VARCHAR}, 
+      #{infoTitleCn,jdbcType=VARCHAR}, #{infoResName,jdbcType=VARCHAR}, #{createDate,jdbcType=BIGINT}, 
+      #{optDate,jdbcType=BIGINT}, #{sortFiled,jdbcType=INTEGER}, #{infoMonth,jdbcType=VARCHAR}, 
+      #{countryId,jdbcType=VARCHAR}, #{brandsId,jdbcType=VARCHAR}, #{yearsCode,jdbcType=VARCHAR}, 
+      #{tradeId,jdbcType=VARCHAR}, #{browser,jdbcType=INTEGER}, #{hits,jdbcType=INTEGER}, 
+      #{classifiedTitleCn,jdbcType=LONGVARCHAR}, #{classifiedTitleEn,jdbcType=LONGVARCHAR}, 
+      #{classifiedId,jdbcType=LONGVARCHAR}, #{tagsTitleCn,jdbcType=LONGVARCHAR}, #{tagsTitleEn,jdbcType=LONGVARCHAR}, 
+      #{tagsId,jdbcType=LONGVARCHAR}, #{infoRemarkEn,jdbcType=LONGVARCHAR}, #{infoRemarkCn,jdbcType=LONGVARCHAR}, 
+      #{keyAllEn,jdbcType=LONGVARCHAR}, #{keyAllCn,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.misnz.lyc.model.InfoSearchEntity" >
+    insert into v_lyc_info_search
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="brandsTitleEn != null" >
+        brands_title_en,
+      </if>
+      <if test="brandsTitleCn != null" >
+        brands_title_cn,
+      </if>
+      <if test="countryTitleCn != null" >
+        country_title_cn,
+      </if>
+      <if test="countryTitleEn != null" >
+        country_title_en,
+      </if>
+      <if test="tradesTitleCn != null" >
+        trades_title_cn,
+      </if>
+      <if test="tradesTitleEn != null" >
+        trades_title_en,
+      </if>
+      <if test="infoId != null" >
+        info_id,
+      </if>
+      <if test="infoType != null" >
+        info_type,
+      </if>
+      <if test="infoTitleEn != null" >
+        info_title_en,
+      </if>
+      <if test="infoTitleCn != null" >
+        info_title_cn,
+      </if>
+      <if test="infoResName != null" >
+        info_res_name,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="optDate != null" >
+        opt_date,
+      </if>
+      <if test="sortFiled != null" >
+        sort_filed,
+      </if>
+      <if test="infoMonth != null" >
+        info_month,
+      </if>
+      <if test="countryId != null" >
+        country_id,
+      </if>
+      <if test="brandsId != null" >
+        brands_id,
+      </if>
+      <if test="yearsCode != null" >
+        years_code,
+      </if>
+      <if test="tradeId != null" >
+        trade_id,
+      </if>
+      <if test="browser != null" >
+        browser,
+      </if>
+      <if test="hits != null" >
+        hits,
+      </if>
+      <if test="classifiedTitleCn != null" >
+        classified_title_cn,
+      </if>
+      <if test="classifiedTitleEn != null" >
+        classified_title_en,
+      </if>
+      <if test="classifiedId != null" >
+        classified_id,
+      </if>
+      <if test="tagsTitleCn != null" >
+        tags_title_cn,
+      </if>
+      <if test="tagsTitleEn != null" >
+        tags_title_en,
+      </if>
+      <if test="tagsId != null" >
+        tags_id,
+      </if>
+      <if test="infoRemarkEn != null" >
+        info_remark_en,
+      </if>
+      <if test="infoRemarkCn != null" >
+        info_remark_cn,
+      </if>
+      <if test="keyAllEn != null" >
+        key_all_en,
+      </if>
+      <if test="keyAllCn != null" >
+        key_all_cn,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="brandsTitleEn != null" >
+        #{brandsTitleEn,jdbcType=VARCHAR},
+      </if>
+      <if test="brandsTitleCn != null" >
+        #{brandsTitleCn,jdbcType=VARCHAR},
+      </if>
+      <if test="countryTitleCn != null" >
+        #{countryTitleCn,jdbcType=VARCHAR},
+      </if>
+      <if test="countryTitleEn != null" >
+        #{countryTitleEn,jdbcType=VARCHAR},
+      </if>
+      <if test="tradesTitleCn != null" >
+        #{tradesTitleCn,jdbcType=VARCHAR},
+      </if>
+      <if test="tradesTitleEn != null" >
+        #{tradesTitleEn,jdbcType=VARCHAR},
+      </if>
+      <if test="infoId != null" >
+        #{infoId,jdbcType=VARCHAR},
+      </if>
+      <if test="infoType != null" >
+        #{infoType,jdbcType=INTEGER},
+      </if>
+      <if test="infoTitleEn != null" >
+        #{infoTitleEn,jdbcType=VARCHAR},
+      </if>
+      <if test="infoTitleCn != null" >
+        #{infoTitleCn,jdbcType=VARCHAR},
+      </if>
+      <if test="infoResName != null" >
+        #{infoResName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=BIGINT},
+      </if>
+      <if test="optDate != null" >
+        #{optDate,jdbcType=BIGINT},
+      </if>
+      <if test="sortFiled != null" >
+        #{sortFiled,jdbcType=INTEGER},
+      </if>
+      <if test="infoMonth != null" >
+        #{infoMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="countryId != null" >
+        #{countryId,jdbcType=VARCHAR},
+      </if>
+      <if test="brandsId != null" >
+        #{brandsId,jdbcType=VARCHAR},
+      </if>
+      <if test="yearsCode != null" >
+        #{yearsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeId != null" >
+        #{tradeId,jdbcType=VARCHAR},
+      </if>
+      <if test="browser != null" >
+        #{browser,jdbcType=INTEGER},
+      </if>
+      <if test="hits != null" >
+        #{hits,jdbcType=INTEGER},
+      </if>
+      <if test="classifiedTitleCn != null" >
+        #{classifiedTitleCn,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="classifiedTitleEn != null" >
+        #{classifiedTitleEn,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="classifiedId != null" >
+        #{classifiedId,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tagsTitleCn != null" >
+        #{tagsTitleCn,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tagsTitleEn != null" >
+        #{tagsTitleEn,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tagsId != null" >
+        #{tagsId,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="infoRemarkEn != null" >
+        #{infoRemarkEn,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="infoRemarkCn != null" >
+        #{infoRemarkCn,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="keyAllEn != null" >
+        #{keyAllEn,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="keyAllCn != null" >
+        #{keyAllCn,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update v_lyc_info_search
+    <set >
+      <if test="record.brandsTitleEn != null" >
+        brands_title_en = #{record.brandsTitleEn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brandsTitleCn != null" >
+        brands_title_cn = #{record.brandsTitleCn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.countryTitleCn != null" >
+        country_title_cn = #{record.countryTitleCn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.countryTitleEn != null" >
+        country_title_en = #{record.countryTitleEn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tradesTitleCn != null" >
+        trades_title_cn = #{record.tradesTitleCn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tradesTitleEn != null" >
+        trades_title_en = #{record.tradesTitleEn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.infoId != null" >
+        info_id = #{record.infoId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.infoType != null" >
+        info_type = #{record.infoType,jdbcType=INTEGER},
+      </if>
+      <if test="record.infoTitleEn != null" >
+        info_title_en = #{record.infoTitleEn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.infoTitleCn != null" >
+        info_title_cn = #{record.infoTitleCn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.infoResName != null" >
+        info_res_name = #{record.infoResName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=BIGINT},
+      </if>
+      <if test="record.optDate != null" >
+        opt_date = #{record.optDate,jdbcType=BIGINT},
+      </if>
+      <if test="record.sortFiled != null" >
+        sort_filed = #{record.sortFiled,jdbcType=INTEGER},
+      </if>
+      <if test="record.infoMonth != null" >
+        info_month = #{record.infoMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.countryId != null" >
+        country_id = #{record.countryId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brandsId != null" >
+        brands_id = #{record.brandsId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yearsCode != null" >
+        years_code = #{record.yearsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tradeId != null" >
+        trade_id = #{record.tradeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.browser != null" >
+        browser = #{record.browser,jdbcType=INTEGER},
+      </if>
+      <if test="record.hits != null" >
+        hits = #{record.hits,jdbcType=INTEGER},
+      </if>
+      <if test="record.classifiedTitleCn != null" >
+        classified_title_cn = #{record.classifiedTitleCn,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.classifiedTitleEn != null" >
+        classified_title_en = #{record.classifiedTitleEn,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.classifiedId != null" >
+        classified_id = #{record.classifiedId,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.tagsTitleCn != null" >
+        tags_title_cn = #{record.tagsTitleCn,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.tagsTitleEn != null" >
+        tags_title_en = #{record.tagsTitleEn,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.tagsId != null" >
+        tags_id = #{record.tagsId,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.infoRemarkEn != null" >
+        info_remark_en = #{record.infoRemarkEn,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.infoRemarkCn != null" >
+        info_remark_cn = #{record.infoRemarkCn,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.keyAllEn != null" >
+        key_all_en = #{record.keyAllEn,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.keyAllCn != null" >
+        key_all_cn = #{record.keyAllCn,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update v_lyc_info_search
+    set brands_title_en = #{record.brandsTitleEn,jdbcType=VARCHAR},
+      brands_title_cn = #{record.brandsTitleCn,jdbcType=VARCHAR},
+      country_title_cn = #{record.countryTitleCn,jdbcType=VARCHAR},
+      country_title_en = #{record.countryTitleEn,jdbcType=VARCHAR},
+      trades_title_cn = #{record.tradesTitleCn,jdbcType=VARCHAR},
+      trades_title_en = #{record.tradesTitleEn,jdbcType=VARCHAR},
+      info_id = #{record.infoId,jdbcType=VARCHAR},
+      info_type = #{record.infoType,jdbcType=INTEGER},
+      info_title_en = #{record.infoTitleEn,jdbcType=VARCHAR},
+      info_title_cn = #{record.infoTitleCn,jdbcType=VARCHAR},
+      info_res_name = #{record.infoResName,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=BIGINT},
+      opt_date = #{record.optDate,jdbcType=BIGINT},
+      sort_filed = #{record.sortFiled,jdbcType=INTEGER},
+      info_month = #{record.infoMonth,jdbcType=VARCHAR},
+      country_id = #{record.countryId,jdbcType=VARCHAR},
+      brands_id = #{record.brandsId,jdbcType=VARCHAR},
+      years_code = #{record.yearsCode,jdbcType=VARCHAR},
+      trade_id = #{record.tradeId,jdbcType=VARCHAR},
+      browser = #{record.browser,jdbcType=INTEGER},
+      hits = #{record.hits,jdbcType=INTEGER},
+      classified_title_cn = #{record.classifiedTitleCn,jdbcType=LONGVARCHAR},
+      classified_title_en = #{record.classifiedTitleEn,jdbcType=LONGVARCHAR},
+      classified_id = #{record.classifiedId,jdbcType=LONGVARCHAR},
+      tags_title_cn = #{record.tagsTitleCn,jdbcType=LONGVARCHAR},
+      tags_title_en = #{record.tagsTitleEn,jdbcType=LONGVARCHAR},
+      tags_id = #{record.tagsId,jdbcType=LONGVARCHAR},
+      info_remark_en = #{record.infoRemarkEn,jdbcType=LONGVARCHAR},
+      info_remark_cn = #{record.infoRemarkCn,jdbcType=LONGVARCHAR},
+      key_all_en = #{record.keyAllEn,jdbcType=LONGVARCHAR},
+      key_all_cn = #{record.keyAllCn,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update v_lyc_info_search
+    set brands_title_en = #{record.brandsTitleEn,jdbcType=VARCHAR},
+      brands_title_cn = #{record.brandsTitleCn,jdbcType=VARCHAR},
+      country_title_cn = #{record.countryTitleCn,jdbcType=VARCHAR},
+      country_title_en = #{record.countryTitleEn,jdbcType=VARCHAR},
+      trades_title_cn = #{record.tradesTitleCn,jdbcType=VARCHAR},
+      trades_title_en = #{record.tradesTitleEn,jdbcType=VARCHAR},
+      info_id = #{record.infoId,jdbcType=VARCHAR},
+      info_type = #{record.infoType,jdbcType=INTEGER},
+      info_title_en = #{record.infoTitleEn,jdbcType=VARCHAR},
+      info_title_cn = #{record.infoTitleCn,jdbcType=VARCHAR},
+      info_res_name = #{record.infoResName,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=BIGINT},
+      opt_date = #{record.optDate,jdbcType=BIGINT},
+      sort_filed = #{record.sortFiled,jdbcType=INTEGER},
+      info_month = #{record.infoMonth,jdbcType=VARCHAR},
+      country_id = #{record.countryId,jdbcType=VARCHAR},
+      brands_id = #{record.brandsId,jdbcType=VARCHAR},
+      years_code = #{record.yearsCode,jdbcType=VARCHAR},
+      trade_id = #{record.tradeId,jdbcType=VARCHAR},
+      browser = #{record.browser,jdbcType=INTEGER},
+      hits = #{record.hits,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

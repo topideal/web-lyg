@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+   <!-- <properties resource="src/main/resources/properties/db.properties"/>-->
+   <!-- <classPathEntry location="lib/my"/>-->
+    <!-- <context id="DB2Tables" targetRuntime="MyBatis3Simple" defaultModelType="flat">-->
+    <context id="DB2Tables" defaultModelType="flat" >
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"></property>
+            <property name="suppressDate" value="true"></property>
+            <property name="javaFileEncoding" value="utf-8"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://db.mis-nz.com:3306/lyc"
+                        userId="misnz"
+                        password="david@2017David">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+
+
+        <javaModelGenerator targetPackage="com.misnz.lyc.model"
+                            targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="sqlmap.lyc"
+                         targetProject="src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.misnz.lyc.dao" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+        <!--<table tableName="%"  enableCountByExample="false"></table>-->
+      <!--<table tableName="t_user" domainObjectName="TUser" enableCountByExample="false"></table>-->
+
+        <!--<table tableName="t_lyc_trades" domainObjectName="TLycTrades" enableCountByExample="false"></table>-->
+        <!--<table tableName="t_lyc_info_classified" domainObjectName="TLycInfoClassified" enableCountByExample="false"></table>
+        <table tableName="t_lyc_info" domainObjectName="TLycInfo" enableCountByExample="false"></table>
+        <table tableName="t_lyc_info_file" domainObjectName="TLycInfoFile" enableCountByExample="false"></table>
+--><!--<table tableName="v_lyc_info_ext" domainObjectName="VLycInfoExt" enableCountByExample="false"></table>
+   -->
+        <table tableName="v_lyc_info_search" domainObjectName="InfoSearchEntity" enableCountByExample="false"></table>
+       <!--<table tableName="t_lyc_recruit_cn" domainObjectName="RecruitCnEntity" enableCountByExample="false"></table>
+        <table tableName="t_lyc_recruit_en" domainObjectName="RecruitEnEntity" enableCountByExample="false"></table>-->
+
+
+    </context>
+</generatorConfiguration>

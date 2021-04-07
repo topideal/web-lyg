@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.misnz.lyc.dao.CountMapper" >
+  <update id="tradesCountAdd" parameterType="java.lang.String" >
+    update t_lyc_trades set case_count = case_count+1 where trades_id = #{tradesId,jdbcType=VARCHAR}
+  </update>
+  <update id="tagsCountAdd" parameterType="java.lang.String" >
+    update t_lyc_tags set case_count = case_count+1 where tags_id = #{tagsId,jdbcType=VARCHAR}
+  </update>
+  <update id="brandsCountAdd" parameterType="java.lang.String" >
+    update t_lyc_brands set case_count = case_count+1 where brands_id = #{brandsId,jdbcType=VARCHAR}
+  </update>
+  <update id="countryCountAdd" parameterType="java.lang.String" >
+    update t_lyc_country set case_count = case_count+1 where country_id = #{countryId,jdbcType=VARCHAR}
+  </update>
+  <update id="classifiedCountAdd" parameterType="java.lang.String" >
+    update t_lyc_classified set case_count = case_count+1 where classified_id = #{classifiedId,jdbcType=VARCHAR}
+  </update>
+
+  <update id="tradesCountMinus" parameterType="java.lang.String" >
+    update t_lyc_trades set case_count = case_count-1 where trades_id = #{tradesId,jdbcType=VARCHAR}
+  </update>
+  <update id="tagsCountMinus" parameterType="java.lang.String" >
+    update t_lyc_tags set case_count = case_count-1 where tags_id = #{tagsId,jdbcType=VARCHAR}
+  </update>
+  <update id="brandsCountMinus" parameterType="java.lang.String" >
+    update t_lyc_brands set case_count = case_count-1 where brands_id = #{brandsId,jdbcType=VARCHAR}
+  </update>
+  <update id="countryCountMinus" parameterType="java.lang.String" >
+    update t_lyc_country set case_count = case_count-1 where country_id = #{countryId,jdbcType=VARCHAR}
+  </update>
+  <update id="classifiedCountMinus" parameterType="java.lang.String" >
+    update t_lyc_classified set case_count = case_count-1 where classified_id = #{classifiedId,jdbcType=VARCHAR}
+  </update>
+
+  <update id="batchClassifiedCountMinus" parameterType="java.lang.String" >
+    update t_lyc_classified set case_count = case_count-1 where classified_id in (select classified_id from t_lyc_info_classified where info_id=#{infoId,jdbcType=VARCHAR})
+  </update>
+  <update id="batchTagsCountMinus" parameterType="java.lang.String" >
+    update t_lyc_tags set case_count = case_count-1 where tags_id in (select tags_id from t_lyc_info_tags where info_id=#{infoId,jdbcType=VARCHAR})
+  </update>
+
+</mapper>

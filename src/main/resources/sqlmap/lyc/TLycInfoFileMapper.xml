@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.misnz.lyc.dao.TLycInfoFileMapper">
+  <cache eviction="LRU" type="com.misnz.framework.cache.redis.RedisCache" />
+  <resultMap id="BaseResultMap" type="com.misnz.lyc.model.TLycInfoFile">
+    <id column="info_file_id" jdbcType="VARCHAR" property="infoFileId" />
+    <result column="info_id" jdbcType="VARCHAR" property="infoId" />
+    <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+    <result column="is_video" jdbcType="INTEGER" property="isVideo" />
+    <result column="sort_filed" jdbcType="INTEGER" property="sortFiled" />
+    <result column="opt_date" jdbcType="BIGINT" property="optDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    info_file_id, info_id, file_name, is_video, sort_filed, opt_date
+  </sql>
+  <select id="selectByExample" parameterType="com.misnz.lyc.model.TLycInfoFileExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_lyc_info_file
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_lyc_info_file
+    where info_file_id = #{infoFileId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_lyc_info_file
+    where info_file_id = #{infoFileId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.misnz.lyc.model.TLycInfoFileExample">
+    delete from t_lyc_info_file
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.misnz.lyc.model.TLycInfoFile">
+    insert into t_lyc_info_file (info_file_id, info_id, file_name, 
+      is_video, sort_filed, opt_date
+      )
+    values (#{infoFileId,jdbcType=VARCHAR}, #{infoId,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, 
+      #{isVideo,jdbcType=INTEGER}, #{sortFiled,jdbcType=INTEGER}, #{optDate,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.misnz.lyc.model.TLycInfoFile">
+    insert into t_lyc_info_file
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="infoFileId != null">
+        info_file_id,
+      </if>
+      <if test="infoId != null">
+        info_id,
+      </if>
+      <if test="fileName != null">
+        file_name,
+      </if>
+      <if test="isVideo != null">
+        is_video,
+      </if>
+      <if test="sortFiled != null">
+        sort_filed,
+      </if>
+      <if test="optDate != null">
+        opt_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="infoFileId != null">
+        #{infoFileId,jdbcType=VARCHAR},
+      </if>
+      <if test="infoId != null">
+        #{infoId,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="isVideo != null">
+        #{isVideo,jdbcType=INTEGER},
+      </if>
+      <if test="sortFiled != null">
+        #{sortFiled,jdbcType=INTEGER},
+      </if>
+      <if test="optDate != null">
+        #{optDate,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_lyc_info_file
+    <set>
+      <if test="record.infoFileId != null">
+        info_file_id = #{record.infoFileId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.infoId != null">
+        info_id = #{record.infoId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileName != null">
+        file_name = #{record.fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isVideo != null">
+        is_video = #{record.isVideo,jdbcType=INTEGER},
+      </if>
+      <if test="record.sortFiled != null">
+        sort_filed = #{record.sortFiled,jdbcType=INTEGER},
+      </if>
+      <if test="record.optDate != null">
+        opt_date = #{record.optDate,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_lyc_info_file
+    set info_file_id = #{record.infoFileId,jdbcType=VARCHAR},
+      info_id = #{record.infoId,jdbcType=VARCHAR},
+      file_name = #{record.fileName,jdbcType=VARCHAR},
+      is_video = #{record.isVideo,jdbcType=INTEGER},
+      sort_filed = #{record.sortFiled,jdbcType=INTEGER},
+      opt_date = #{record.optDate,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.misnz.lyc.model.TLycInfoFile">
+    update t_lyc_info_file
+    <set>
+      <if test="infoId != null">
+        info_id = #{infoId,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null">
+        file_name = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="isVideo != null">
+        is_video = #{isVideo,jdbcType=INTEGER},
+      </if>
+      <if test="sortFiled != null">
+        sort_filed = #{sortFiled,jdbcType=INTEGER},
+      </if>
+      <if test="optDate != null">
+        opt_date = #{optDate,jdbcType=BIGINT},
+      </if>
+    </set>
+    where info_file_id = #{infoFileId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.misnz.lyc.model.TLycInfoFile">
+    update t_lyc_info_file
+    set info_id = #{infoId,jdbcType=VARCHAR},
+      file_name = #{fileName,jdbcType=VARCHAR},
+      is_video = #{isVideo,jdbcType=INTEGER},
+      sort_filed = #{sortFiled,jdbcType=INTEGER},
+      opt_date = #{optDate,jdbcType=BIGINT}
+    where info_file_id = #{infoFileId,jdbcType=VARCHAR}
+  </update>
+</mapper>

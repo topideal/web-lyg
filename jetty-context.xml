@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
+<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+    <Call name="setAttribute">
+        <Arg>org.eclipse.jetty.server.webapp.WebInfIncludeJarPattern</Arg>
+        <Arg>.*/.*taglibs[^/]*\.jar$</Arg>
+        <!--<Arg>org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern</Arg>
+        <Arg>.*/foo-[^/]*\.jar$|.*/bar-[^/]*\.jar$|.*/classes/.*</Arg>-->
+    </Call>
+    <Set name="maxFormContentSize" type="int">600000</Set>
+    <Get name="securityHandler">
+        <Set name="loginService">
+            <New class="org.eclipse.jetty.security.HashLoginService">
+                <Set name="name">Realm</Set>
+                <Set name="config"><SystemProperty name="jetty.base" default="."/>/realm.properties</Set>
+                <!-- To enable reload of realm when properties change, uncomment the following lines -->
+                <!-- changing refreshInterval (in seconds) as desired                                -->
+                <!--
+                <Set name="refreshInterval">5</Set>
+                <Call name="start"></Call>
+                -->
+            </New>
+        </Set>
+        <Set name="authenticator">
+            <New class="org.eclipse.jetty.security.authentication.FormAuthenticator">
+                <Set name="alwaysSaveUri">true</Set>
+            </New>
+        </Set>
+        <Set name="checkWelcomeFiles">true</Set>
+    </Get>
+</Configure>

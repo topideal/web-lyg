@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.misnz.lyc.dao.TLycClassifiedMapper" >
+  <cache eviction="LRU" type="com.misnz.framework.cache.redis.RedisCache" />
+  <resultMap id="BaseResultMap" type="com.misnz.lyc.model.TLycClassified" >
+    <id column="classified_id" property="classifiedId" jdbcType="VARCHAR" />
+    <result column="title_cn" property="titleCn" jdbcType="VARCHAR" />
+    <result column="classified_remark" property="classifiedRemark" jdbcType="VARCHAR" />
+    <result column="classified_res_name" property="classifiedResName" jdbcType="VARCHAR" />
+    <result column="case_count" property="caseCount" jdbcType="INTEGER" />
+    <result column="title_en" property="titleEn" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    classified_id, title_cn, classified_remark, classified_res_name, case_count, title_en
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.misnz.lyc.model.TLycClassifiedExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_lyc_classified
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_lyc_classified
+    where classified_id = #{classifiedId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_lyc_classified
+    where classified_id = #{classifiedId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.misnz.lyc.model.TLycClassifiedExample" >
+    delete from t_lyc_classified
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.misnz.lyc.model.TLycClassified" >
+    insert into t_lyc_classified (classified_id, title_cn, classified_remark, 
+      classified_res_name, case_count, title_en
+      )
+    values (#{classifiedId,jdbcType=VARCHAR}, #{titleCn,jdbcType=VARCHAR}, #{classifiedRemark,jdbcType=VARCHAR}, 
+      #{classifiedResName,jdbcType=VARCHAR}, #{caseCount,jdbcType=INTEGER}, #{titleEn,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.misnz.lyc.model.TLycClassified" >
+    insert into t_lyc_classified
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="classifiedId != null" >
+        classified_id,
+      </if>
+      <if test="titleCn != null" >
+        title_cn,
+      </if>
+      <if test="classifiedRemark != null" >
+        classified_remark,
+      </if>
+      <if test="classifiedResName != null" >
+        classified_res_name,
+      </if>
+      <if test="caseCount != null" >
+        case_count,
+      </if>
+      <if test="titleEn != null" >
+        title_en,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="classifiedId != null" >
+        #{classifiedId,jdbcType=VARCHAR},
+      </if>
+      <if test="titleCn != null" >
+        #{titleCn,jdbcType=VARCHAR},
+      </if>
+      <if test="classifiedRemark != null" >
+        #{classifiedRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="classifiedResName != null" >
+        #{classifiedResName,jdbcType=VARCHAR},
+      </if>
+      <if test="caseCount != null" >
+        #{caseCount,jdbcType=INTEGER},
+      </if>
+      <if test="titleEn != null" >
+        #{titleEn,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_lyc_classified
+    <set >
+      <if test="record.classifiedId != null" >
+        classified_id = #{record.classifiedId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.titleCn != null" >
+        title_cn = #{record.titleCn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classifiedRemark != null" >
+        classified_remark = #{record.classifiedRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classifiedResName != null" >
+        classified_res_name = #{record.classifiedResName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.caseCount != null" >
+        case_count = #{record.caseCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.titleEn != null" >
+        title_en = #{record.titleEn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_lyc_classified
+    set classified_id = #{record.classifiedId,jdbcType=VARCHAR},
+      title_cn = #{record.titleCn,jdbcType=VARCHAR},
+      classified_remark = #{record.classifiedRemark,jdbcType=VARCHAR},
+      classified_res_name = #{record.classifiedResName,jdbcType=VARCHAR},
+      case_count = #{record.caseCount,jdbcType=INTEGER},
+      title_en = #{record.titleEn,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.misnz.lyc.model.TLycClassified" >
+    update t_lyc_classified
+    <set >
+      <if test="titleCn != null" >
+        title_cn = #{titleCn,jdbcType=VARCHAR},
+      </if>
+      <if test="classifiedRemark != null" >
+        classified_remark = #{classifiedRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="classifiedResName != null" >
+        classified_res_name = #{classifiedResName,jdbcType=VARCHAR},
+      </if>
+      <if test="caseCount != null" >
+        case_count = #{caseCount,jdbcType=INTEGER},
+      </if>
+      <if test="titleEn != null" >
+        title_en = #{titleEn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where classified_id = #{classifiedId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.misnz.lyc.model.TLycClassified" >
+    update t_lyc_classified
+    set title_cn = #{titleCn,jdbcType=VARCHAR},
+      classified_remark = #{classifiedRemark,jdbcType=VARCHAR},
+      classified_res_name = #{classifiedResName,jdbcType=VARCHAR},
+      case_count = #{caseCount,jdbcType=INTEGER},
+      title_en = #{titleEn,jdbcType=VARCHAR}
+    where classified_id = #{classifiedId,jdbcType=VARCHAR}
+  </update>
+</mapper>

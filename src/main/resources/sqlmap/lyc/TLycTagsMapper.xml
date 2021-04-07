@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.misnz.lyc.dao.TLycTagsMapper" >
+  <cache eviction="LRU" type="com.misnz.framework.cache.redis.RedisCache" />
+  <resultMap id="BaseResultMap" type="com.misnz.lyc.model.TLycTags" >
+    <id column="tags_id" property="tagsId" jdbcType="VARCHAR" />
+    <result column="title_cn" property="titleCn" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="case_count" property="caseCount" jdbcType="INTEGER" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="title_en" property="titleEn" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    tags_id, title_cn, remark, case_count, parent_id, title_en
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.misnz.lyc.model.TLycTagsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_lyc_tags
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_lyc_tags
+    where tags_id = #{tagsId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_lyc_tags
+    where tags_id = #{tagsId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.misnz.lyc.model.TLycTagsExample" >
+    delete from t_lyc_tags
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.misnz.lyc.model.TLycTags" >
+    insert into t_lyc_tags (tags_id, title_cn, remark, 
+      case_count, parent_id, title_en
+      )
+    values (#{tagsId,jdbcType=VARCHAR}, #{titleCn,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{caseCount,jdbcType=INTEGER}, #{parentId,jdbcType=VARCHAR}, #{titleEn,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.misnz.lyc.model.TLycTags" >
+    insert into t_lyc_tags
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tagsId != null" >
+        tags_id,
+      </if>
+      <if test="titleCn != null" >
+        title_cn,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="caseCount != null" >
+        case_count,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="titleEn != null" >
+        title_en,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tagsId != null" >
+        #{tagsId,jdbcType=VARCHAR},
+      </if>
+      <if test="titleCn != null" >
+        #{titleCn,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="caseCount != null" >
+        #{caseCount,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="titleEn != null" >
+        #{titleEn,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_lyc_tags
+    <set >
+      <if test="record.tagsId != null" >
+        tags_id = #{record.tagsId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.titleCn != null" >
+        title_cn = #{record.titleCn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.caseCount != null" >
+        case_count = #{record.caseCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.parentId != null" >
+        parent_id = #{record.parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.titleEn != null" >
+        title_en = #{record.titleEn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_lyc_tags
+    set tags_id = #{record.tagsId,jdbcType=VARCHAR},
+      title_cn = #{record.titleCn,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      case_count = #{record.caseCount,jdbcType=INTEGER},
+      parent_id = #{record.parentId,jdbcType=VARCHAR},
+      title_en = #{record.titleEn,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.misnz.lyc.model.TLycTags" >
+    update t_lyc_tags
+    <set >
+      <if test="titleCn != null" >
+        title_cn = #{titleCn,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="caseCount != null" >
+        case_count = #{caseCount,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="titleEn != null" >
+        title_en = #{titleEn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tags_id = #{tagsId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.misnz.lyc.model.TLycTags" >
+    update t_lyc_tags
+    set title_cn = #{titleCn,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      case_count = #{caseCount,jdbcType=INTEGER},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      title_en = #{titleEn,jdbcType=VARCHAR}
+    where tags_id = #{tagsId,jdbcType=VARCHAR}
+  </update>
+</mapper>
