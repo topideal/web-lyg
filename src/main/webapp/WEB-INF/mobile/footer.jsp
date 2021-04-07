@@ -30,7 +30,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12"  style="padding:0;margin: 0;height: 100px;color: #fff;">
             <img src="/images/m_bottom_bar.jpg" border="0" class="img-responsive">
             <div class="font_size_11 letter_spacing_1 text-center footer-img">
-            COPYRIGHT RETAINED BY <strong class="font_size_10">LAYUETSAI.COM</strong></div>
+            COPYRIGHT RETAINED BY <strong class="font_size_10">LAYUETSAI.GROUP</strong></div>
         </div>
     </div>
 

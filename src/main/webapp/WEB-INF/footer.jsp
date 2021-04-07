@@ -24,7 +24,7 @@
 
                         </div>
                         <div class="col-xs-12 col-sm-4 col-md-6 font_size_10 letter_spacing_2 text-center">
-                            COPYRIGHT RETAINED BY <strong class="font_size_8 letter_spacing_2 title_font ">LAYUETSAI.COM</strong>
+                            COPYRIGHT RETAINED BY <strong class="font_size_8 letter_spacing_2 title_font ">LAYUETSAI.GROUP</strong>
                         </div>
 
                     </div>
