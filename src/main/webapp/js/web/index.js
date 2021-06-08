@@ -13,8 +13,7 @@ function totop() {
     $(window).scroll(function () {
         if ($(this).scrollTop() > 300) {
             $('.totop').slideDown();
-        }
-        else {
+        } else {
             $('.totop').slideUp();
         }
     });
@@ -69,7 +68,7 @@ function getInfoList(pageNumber) {
                     str += '<div class="item">';
                     str += '<div class="thumbnail" >';
                     str += '<div style="display: block;width: 100%;height: 100%;overflow: hidden;">';
-                    if (i < 3 && pageNumber==1) {
+                    if (i < 3 && pageNumber == 1) {
                         str += '<div style="position: absolute;top:15px;width: 20%;height: 10%;z-index:10;right: 2px">';
                         str += new_tag_icon;
                         str += "</div>";
@@ -146,7 +145,7 @@ function getInfoList(pageNumber) {
                     nextStr = "<div class='btn-group' role='group' ><a type='button' style='line-height: 63px;vertical-align: middle;padding: 0 20px;width:120px;' class='btn btn-default' href='" + url + "?pageNumber=" + pageNumber + "'>" + pages_next + "</a> <a type='button' style='height: 65px;padding-top: 20px;' class='btn btn-default' href='" + url + "?pageNumber=" + pageNumber + "'>" + rightMenuTagSvg + "</a></div>";
                 }
                 $('#next').html(nextStr);
-                if (data.currentPage <= data.pages-4) {
+                if (data.currentPage <= data.pages - 4) {
                     var pages = data.pages < 6 ? data.pages : data.currentPage + 4;
                     var pagesStr = "<div class='btn-group' role='group' >";
                     var i = data.pages < 6 ? 1 : data.currentPage;
@@ -163,11 +162,10 @@ function getInfoList(pageNumber) {
                     pagesStr += "</div>";
                     $('#pages').html(pagesStr);
 
-                }else{
+                } else {
                     var pages = data.pages;
                     var pagesStr = "<div class='btn-group' role='group' >";
-                    var i = data.pages < 6 ? 1 : data.currentPage-4;
-
+                    var i = data.pages < 6 ? 1 : data.pages - 4;
 
                     for (i; i <= pages; i++) {
                         if (i < 6) {
